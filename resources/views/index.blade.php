@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Buscar actividad</div>
+                    <div class="card-header">{{__("common.activity_finder")}}</div>
                     <div class="card-body">
                         <form method="post" name="search_activity" id="search_activity"
                               autocomplete="off"
@@ -17,11 +17,13 @@
                                 <input type="text" id='search_date' name='search_date' maxlength='20'
                                        class="form-control datepicker"
                                        value=""
-                                       placeholder="Fecha">
+                                       placeholder="{{__("common.date")}}">
                             </div>
                             <div class="col-md-12">
                                 <label for="number_people" class="form-label">{{__("common.number_people")}}</label>
-                                <input type="text" class="form-control" id="number_people" name="number_people">
+                                <input type="text" class="form-control" id="number_people" name="number_people"
+                                       placeholder="{{__("common.number_people")}}"
+                                >
                             </div>
                             <div class="col-12">
                                 <button type="button" class="btn btn-primary ml-auto"
@@ -33,14 +35,14 @@
             </div>
             <div class="col-md-8" id="resultd" style="display: none">
                 <div class="card">
-                    <div class="card-header">Result</div>
+                    <div class="card-header">{{__("common.list_activity")}}</div>
                     <div class="card-body">
                         <table class="table table-bordered table-responsive" id="ajax-crud-datatable">
                             <thead>
                             <tr>
-                                <th>poularidad</th>
-                                <th width="30%">{{__("common.title")}}</th>
-                                <th width="40%">{{__("common.price_person")}}</th>
+                                <th width="20%">{{__("common.title")}}</th>
+                                <th width="20%">{{__("common.price_person")}}</th>
+                                <th width="20%">{{__("common.popularity")}}</th>
                                 <th width="20%">{{__("common.detail")}}</th>
                                 <th width="20%">{{__("common.action")}}</th>
                             </tr>
@@ -59,49 +61,49 @@
                 <input type="hidden" id="r_id" name="r_id" value="">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Detalle actividad</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close close " data-dismiss="modal" aria-hidden="true"
+                            aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="col-md-12">
-                        <label for="r_title" class="form-label">{{__("common.title")}}</label>
+                        <label for="r_title" class="form-label"><b>{{__("common.title")}}:</b></label>
                         <div id="r_title"></div>
                     </div>
                     <div class="col-md-12">
-                        <label for="r_descrption" class="form-label">{{__("common.price_person")}}</label>
+                        <label for="r_descrption" class="form-label"><b>{{__("common.price_person")}}:</b></label>
                         <div id="r_price_person"></div>
                     </div>
                     <div class="col-md-12">
-                        <label for="r_description" class="form-label">{{__("common.description")}}</label>
+                        <label for="r_description" class="form-label"><b>{{__("common.description")}}:</b></label>
                         <div id="r_description"></div>
                     </div>
                     <div class="col-md-12">
-                        <label for="r_start_at" class="form-label">{{__("common.number_people")}}</label>
+                        <label for="r_start_at" class="form-label"><b>{{__("common.number_people")}}:</b></label>
                         <div id="r_number_people"></div>
                     </div>
                     <div class="col-md-12">
-                        <label for="r_start_at" class="form-label">Precio</label>
+                        <label for="r_start_at" class="form-label"><b>Precio:</b></label>
                         <div id="r_price"></div>
                     </div>
                     <div class="col-md-12">
-                        <label for="r_start_at" class="form-label">Fecha inicio</label>
+                        <label for="r_start_at" class="form-label"><b>Fecha inicio:</b></label>
                         <div id="r_start_at"></div>
                     </div>
                     <div class="col-md-12">
-                        <label for="r_start_at" class="form-label">Actividades Relacionadas</label>
+                        <label for="r_start_at" class="form-label"><b>Actividades Relacionadas:</b></label>
                         <table class="table table-bordered table-responsive" id="detalledatatable">
                             <thead>
                             <tr>
-                                <th width="100%">{{__("common.title")}}</th>
+                                <th width="100%"><b>{{__("common.title")}}:</b></th>
                             </tr>
                             </thead>
                             <tbody>
-
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" id="save">Comprar</button>
                 </div>
             </div>
@@ -111,9 +113,22 @@
 @section('script')
     <script type="text/javascript">
         var dataResultado;
+
         $(document).ready(function () {
-            $('.datepicker').datepicker();
-            $('#datepicker').datepicker();
+            $.validator.addMethod("dateFormat", function (value, element) {
+                    const regex = /^\d{2}\/\d{2}\/\d{4}$/;
+                    console.log(value.match(regex));
+                    return value.match(regex);
+                },
+                "Please enter a date in the format dd-mm-yyyy.");
+            $('.datepicker').datepicker({
+                language: 'es',
+                format: 'dd/mm/yyyy'
+            });
+            $('#datepicker').datepicker({
+                language: 'es',
+                format: 'dd/mm/yyyy'
+            });
             $("#resultd").hide();
             $.ajaxSetup({
                 headers: {
@@ -121,9 +136,17 @@
                 }
             });
             var columns = [
-                {"mData": 'popularity', searchable: false,},
                 {"mData": 'title'},
-                {"mData": "price_person"},
+                {
+                    "mData": "price_person", render: function (data, type, row, meta) {
+                        if (row.price_person != '') {
+                            return '$ ' + parseFloat(row.price_person).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                        } else {
+                            return '';
+                        }
+                    }
+                },
+                {"mData": 'popularity', searchable: false,},
                 {"mData": "detail", sortable: false, searchable: false,},
                 {"mData": "contract", sortable: false, searchable: false,},
             ];
@@ -132,34 +155,33 @@
                 "aoColumns": columns,
                 "autoWidth": true,
                 responsive: true,
-                "aaSorting": [[0, "desc"]],
+                "aaSorting": [[2, "desc"]],
                 dom: dataTableDom,
                 buttons: buttons,
                 "oLanguage": oLanguage,
-                columnDefs: [
-                    {
-                        target: 0,
-                        visible: false,
-                        searchable: false,
-                    }
-                ],
             });
             // validate the form when it is submitted
             var $orderForm = $("#search_activity").validate({
                 rules: {
                     search_date: {
                         required: true,
+                        dateFormat: true
                     },
                     number_people: {
                         required: true,
+                        number: true,
+                        min: 1
                     },
                 },
                 messages: {
                     search_date: {
-                        required: "Favor de introducir una <b style=\"color:#780000;\">Fecha</b> correcto",
+                        required: "Favor de introducir una <b style=\"color:#780000;\">{{__("common.date")}}</b> correcto",
+                        dateFormat: "Favor de introducir una <b style=\"color:#780000;\">{{__("common.date")}} en formato dd/mm/yyyy</b>",
                     },
                     number_people: {
-                        required: "Favor de introducir una <b style=\"color:#780000;\">Fecha</b> correcto",
+                        required: "Favor de introducir una <b style=\"color:#780000;\">{{__("common.number_people")}}</b> correcto",
+                        number: "Favor de introducir un <b style=\"color:#780000;\">Numero</b>",
+                        min: "Favor de introducir una <b style=\"color:#780000;\">número mayor a cero</b>",
                     },
                 },
                 errorPlacement: function (error, element) {
@@ -172,13 +194,13 @@
             $(document).delegate('.booker', 'click', function () {
                 var id = $(this).data("id");
                 var number_people = $("#number_people").val();
-                save(id,number_people)
+                save(id, number_people)
             });
             $(document).delegate('#save', 'click', function () {
                 var id = $("#r_id").val();
                 var number_people = $("#number_people").val();
                 $('#staticBackdrop').modal('hide');
-                save(id,number_people);
+                save(id, number_people);
             });
             $(document).delegate('.detail', 'click', function () {
                 var id = $(this).data("id");
@@ -191,13 +213,16 @@
                 });
                 request.done(function (res) {
                     var item = res.data;
-                    $('#staticBackdrop').modal({show:true});
+                    $('#staticBackdrop').modal({show: true});
                     $("#r_title").html(item.title);
                     $("#r_description").html(item.description);
-                    $("#r_price_person").html(item.price_person);
+                    var price_person = '$ ' + parseFloat(item.price_person).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                    $("#r_price_person").html(price_person);
                     var number_people = $("#number_people").val();
+                    var r_price = '$ ' + parseFloat(number_people * item.price_person).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+                    console.log("r_price:", r_price);
                     $("#r_number_people").html(number_people);
-                    $("#r_price").html(number_people*item.price_person);
+                    $("#r_price").html(r_price);
                     $("#r_start_at").html(item.start_at);
                     $("#r_id").val(item.id);
                     var search_date = $("#search_date").val();
@@ -206,23 +231,27 @@
                     date = inputDate.getDate();
                     month = inputDate.getMonth() + 1; // take care of the month's number here ⚠️
                     year = inputDate.getFullYear();
-                    const html = item.activities.map(function(item) {
-
-
+                    const html = item.activities.map(function (item) {
                         const inputDate1 = new Date(item.activity.start_at);
                         let date1, month1, year1;
                         date1 = inputDate1.getDate();
                         month1 = inputDate1.getMonth() + 1; // take care of the month's number here ⚠️
                         year1 = inputDate1.getFullYear();
-                        console.log(year + "-" + month + "-" + date< item.activity.start_at);
+                        console.log(year + "-" + month + "-" + date < item.activity.start_at);
                         console.log(year + "-" + month + "-" + date);
-                        console.log( year1 + "-" + month1 + "-" + date1);
-                        if(year + "-" + month + "-" + date< year1 + "-" + month1 + "-" + date1) {
+                        console.log(year1 + "-" + month1 + "-" + date1);
+                        if (year + "-" + month + "-" + date < year1 + "-" + month1 + "-" + date1) {
                             return "<tr> <td>" + item.activity.title + "</td></tr>";
                         }
                     });
                     console.log(html);
-                    $("#detalledatatable > tbody").html(html.join());
+                    console.log(html.length);
+                    if (html.length === 0) {
+                        $("#detalledatatable > tbody").html("<tr> <td class='alert-warning table-warning'>No hay actividades relacionadas</td></tr>");
+                    } else {
+                        $("#detalledatatable > tbody").html(html.join());
+                    }
+
                 });
                 request.fail(function (res) {
                     console.log(res);
@@ -278,7 +307,7 @@
                                     .node();
 
                             });
-                        }else{
+                        } else {
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Oops...',
@@ -288,7 +317,8 @@
                     });
                 }
             });
-            function save(id,number_people) {
+
+            function save(id, number_people) {
                 Swal.fire({
                     title: "{{__("common.add_activity")}}",
                     text: "",

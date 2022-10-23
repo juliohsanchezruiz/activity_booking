@@ -24,4 +24,12 @@ return [
     'accept' => 'Aceptar',
     'detail' => 'Detalle',
     'description' => 'Descripción',
+    'app_name' => 'Reserva de actividades',
+    'home' => 'Inicio',
+    'popularity' => 'Popularidad',
+    'list_activity' => 'Lista actividades',
+    'activity_finder' => 'Buscador de Actividades',
+    'total_price' => 'Presio total',
+    'relationship_date' => 'Fecha de relacion',
+    'reservation_list' => 'Lista de reservaciones',
 ];

@@ -15,5 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('activity', [\App\Http\Controllers\Api\ActivityController::class, 'index'])->name('activity.index');
+Route::post('ativity_reservation', [\App\Http\Controllers\Api\ActivityReservationController::class, 'index'])->name('ativity_reservation.index');
 Route::get('activity/{id}', [\App\Http\Controllers\Api\ActivityController::class, 'show'])->name('activity.show');
 Route::post('activity/{id}/reservation', [\App\Http\Controllers\Api\ActivityReservationController::class, 'store'])->name('activity_reservation.store');

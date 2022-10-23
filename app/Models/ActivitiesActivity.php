@@ -19,6 +19,5 @@ class ActivitiesActivity extends Model
     public function activity()
     {
         return $this->hasOne(Activity::class, 'id', 'activity_id');
-
     }
 }

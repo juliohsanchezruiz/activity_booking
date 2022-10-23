@@ -23,4 +23,12 @@ return [
     'accept' => 'Accept',
     'detail' => 'Detail',
     'description' => 'Description',
+    'app_name' => 'Activity booking',
+    'home' => 'Home',
+    'popularity' => 'Popularity',
+    'list_activity' => 'List Activity',
+    'activity_finder' => 'Activity Finder',
+    'total_price' => 'Total price',
+    'relationship_date' => 'Relationship date',
+    'reservation_list' => 'Reservation list',
 ];

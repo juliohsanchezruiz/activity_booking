@@ -28,4 +28,9 @@ class ActivityReservation extends Model
         'relationship_date' => 'date',
         'activity_date' => 'date',
     ];
+
+    public function activity()
+    {
+        return $this->belongsTo(Activity::class);
+    }
 }

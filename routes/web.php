@@ -14,3 +14,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/bookings', [App\Http\Controllers\HomeController::class, 'bookings'])->name('bookings');

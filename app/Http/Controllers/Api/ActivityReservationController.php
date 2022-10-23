@@ -8,6 +8,7 @@ use App\Models\Activity;
 use App\Models\ActivityReservation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class ActivityReservationController extends Controller
 {
@@ -19,6 +20,8 @@ class ActivityReservationController extends Controller
     public function index()
     {
         //
+        $data = ActivityReservation::with("activity");
+        return DataTables::of($data)->make(true);
     }
 
     /**
