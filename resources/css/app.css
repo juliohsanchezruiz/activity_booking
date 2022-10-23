@@ -1,0 +1,6 @@
+@import "~bootstrap/scss/bootstrap.scss";
+@import "~jquery-toast-plugin/demos/css/jquery.toast.css";
+@import "~bootstrap-datepicker/dist/css/bootstrap-datepicker.css";
+@import "~bootstrap-icons/font/bootstrap-icons.scss";
+@import "~sweetalert2/src/sweetalert2.scss";
+@import "~sweetalert2/src/variables.scss";
