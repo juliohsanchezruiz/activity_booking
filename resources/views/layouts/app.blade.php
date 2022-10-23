@@ -132,7 +132,8 @@
     // DO NOT REMOVE : GLOBAL FUNCTIONS!
     const dataTableDom = "<'row mb-3'<'col-sm-12 col-md-6 d-flex align-items-center justify-content-start'><'col-sm-12 col-md-6 d-flex align-items-center justify-content-end'B>>" +
         "<'row'<'col-sm-12'tr>>" +
-        "<'row'<'col-sm-12 col-md-5'il><'col-sm-12 col-md-7'p>>";
+        "<'row'<'col-sm-12 col-md-5'l><'col-sm-12 col-md-7'>>"+
+        "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>";
     const sLengthMenu = 'Mostrar <select class="form-control custom-select">' +
         '<option value="10">10</option>' +
         '<option value="25">25</option>' +

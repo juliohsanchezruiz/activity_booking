@@ -117,7 +117,6 @@
         $(document).ready(function () {
             $.validator.addMethod("dateFormat", function (value, element) {
                     const regex = /^\d{2}\/\d{2}\/\d{4}$/;
-                    console.log(value.match(regex));
                     return value.match(regex);
                 },
                 "Please enter a date in the format dd-mm-yyyy.");
@@ -220,7 +219,6 @@
                     $("#r_price_person").html(price_person);
                     var number_people = $("#number_people").val();
                     var r_price = '$ ' + parseFloat(number_people * item.price_person).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-                    console.log("r_price:", r_price);
                     $("#r_number_people").html(number_people);
                     $("#r_price").html(r_price);
                     $("#r_start_at").html(item.start_at);
@@ -237,15 +235,10 @@
                         date1 = inputDate1.getDate();
                         month1 = inputDate1.getMonth() + 1; // take care of the month's number here ⚠️
                         year1 = inputDate1.getFullYear();
-                        console.log(year + "-" + month + "-" + date < item.activity.start_at);
-                        console.log(year + "-" + month + "-" + date);
-                        console.log(year1 + "-" + month1 + "-" + date1);
                         if (year + "-" + month + "-" + date < year1 + "-" + month1 + "-" + date1) {
                             return "<tr> <td>" + item.activity.title + "</td></tr>";
                         }
                     });
-                    console.log(html);
-                    console.log(html.length);
                     if (html.length === 0) {
                         $("#detalledatatable > tbody").html("<tr> <td class='alert-warning table-warning'>No hay actividades relacionadas</td></tr>");
                     } else {
@@ -254,7 +247,6 @@
 
                 });
                 request.fail(function (res) {
-                    console.log(res);
                     var message = res.message;
                     $.toast({
                         heading: 'Error',
@@ -270,13 +262,12 @@
                 });
             });
             $("#guardar").click(function () {
-                console.log($("#search_activity").valid());
                 if ($("#search_activity").valid()) {
                     dataResultado.clear()
                         .draw();
                     let urlAjax = $("#search_activity").attr("action");
-                    console.log(urlAjax);
                     var search_date = $("#search_date").val();
+                    let newDate = search_date.split("/");
                     const inputDate = new Date(search_date);
                     let date, month, year;
 
@@ -347,7 +338,6 @@
                             })
                         });
                         request.fail(function (res) {
-                            console.log(res);
                             var message = res.message;
                             $.toast({
                                 heading: 'Error',
