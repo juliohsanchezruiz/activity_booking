@@ -27,13 +27,14 @@
 > el unit test
 
     php artisan db:seed --class=ActivitySeeder
+    php artisan db:seed --class=ActivitiesActivitySeeder
 
 > Pruebas unitarias
 
     php artisan test  tests/Feature/ActivityTest.php
     php artisan test  tests/Feature/ActivityReservationTest.php
 
-> Ejecutar para los stylos y los pluging
+> Ejecutar para los estilos y los pluging
 
     npm install
     npm run dev
