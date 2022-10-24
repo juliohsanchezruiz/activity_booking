@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Log;
 
 class ActivityController extends Controller
 {
@@ -23,8 +24,13 @@ class ActivityController extends Controller
         if ($request->has('search_date')) {
             $searchDate = $request->get('search_date');
             if (!empty($searchDate)) {
-                $activity = Activity::where("start_at", ">=", $searchDate)->orderBy("popularity", "desc")->limit(100)->get();
-                return new $this->collectionResource($activity);
+                $now = Carbon::now();
+                Log::debug($now->format("Y-m-d"));
+                Log::debug($searchDate);
+                if ($now->format("Y-m-d") <= $searchDate) {
+                    $activity = Activity::where("start_at", ">=", $searchDate)->orderBy("popularity", "desc")->limit(100)->get();
+                    return new $this->collectionResource($activity);
+                }
             }
         }
         return response()->json([], 200);
@@ -60,11 +66,11 @@ class ActivityController extends Controller
     public function show($id)
     {
         //
-        $activity = Activity::with(['activities','activities.activity'])->find($id);
+        $activity = Activity::with(['activities', 'activities.activity'])->find($id);
         if (!$activity) {
             return response()->json([
                 'message' => __('entities.IDNotFound'),
-                'error'   => __('entities.IDNotFound'),
+                'error' => __('entities.IDNotFound'),
             ], 404);
         }
         return new $this->resource($activity);

@@ -122,11 +122,15 @@
                 "Please enter a date in the format dd-mm-yyyy.");
             $('.datepicker').datepicker({
                 language: 'es',
-                format: 'dd/mm/yyyy'
+                autoclose: true,
+                format: 'dd/mm/yyyy',
+                startDate: new Date(),
             });
             $('#datepicker').datepicker({
                 language: 'es',
-                format: 'dd/mm/yyyy'
+                autoclose: true,
+                format: 'dd/mm/yyyy',
+                startDate: new Date(),
             });
             $("#resultd").hide();
             $.ajaxSetup({
@@ -268,18 +272,19 @@
                     let urlAjax = $("#search_activity").attr("action");
                     var search_date = $("#search_date").val();
                     let newDate = search_date.split("/");
-                    const inputDate = new Date(search_date);
+                    const inputDate = new Date(newDate[2] + "-" + newDate[1] + "-" + newDate[0]);
                     let date, month, year;
 
                     date = inputDate.getDate();
                     month = inputDate.getMonth() + 1; // take care of the month's number here ⚠️
                     year = inputDate.getFullYear();
+                    console.log(year + "-" + month + "-" + date);
                     var request = $.ajax({
                         url: urlAjax,
                         type: "POST",
                         dataType: "json",
                         data: {
-                            search_date: year + "-" + month + "-" + date,
+                            search_date: newDate[2] + "-" + newDate[1] + "-" + newDate[0],
                         }
                     });
                     request.done(function (res) {

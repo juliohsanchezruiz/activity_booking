@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -60,6 +61,19 @@ class ActivityTest extends TestCase
     {
         $params = [
             "search_date1" => "2022-12-11",
+        ];
+
+        $result = [];
+        $response = $this->post(route('activity.index'), $params);
+
+        $response->assertJson($result)->assertStatus(200);
+    }
+
+    public function test_min_date()
+    {
+        $now = Carbon::now();
+        $params = [
+            "search_date" => $now->addDays(-5)->format("Y-m-d"),
         ];
 
         $result = [];
